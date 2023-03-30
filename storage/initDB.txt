@@ -1,0 +1,110 @@
+-- Table for Product Categories
+CREATE TABLE ProductCategories (
+    CategoryID INT AUTO_INCREMENT PRIMARY KEY,
+    CategoryName VARCHAR(255) NOT NULL,
+    ParentCategoryID INT,
+    FOREIGN KEY (ParentCategoryID) REFERENCES ProductCategories(CategoryID)
+) AUTO_INCREMENT = 1;
+
+-- Table for Products
+CREATE TABLE Products (
+    ProductID INT AUTO_INCREMENT PRIMARY KEY,
+    ProductName VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Price DECIMAL(10,2) NOT NULL,
+    CategoryID INT NOT NULL,
+    FOREIGN KEY (CategoryID) REFERENCES ProductCategories(CategoryID)
+) AUTO_INCREMENT = 1;
+
+-- Table for User
+CREATE TABLE Users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    UserName VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    Address VARCHAR(255),
+    Phone VARCHAR(20),
+    JoinDate DATETIME DEFAULT CURRENT_TIMESTAMP
+) AUTO_INCREMENT = 1;
+
+-- Table for Feedbacks
+CREATE TABLE Feedbacks (
+    FeedbackID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    ProductID INT NOT NULL,
+    Rating INT NOT NULL,
+    Comment TEXT,
+    Store VARCHAR(255) NOT NULL,
+    FeedbackDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+) AUTO_INCREMENT = 1;
+
+
+=====================================================================================================
+
+-- Insert product categories
+INSERT INTO ProductCategories (CategoryID, CategoryName, ParentCategoryID) VALUES
+(1, 'Electronics', NULL),
+(2, 'Computers', 1),
+(3, 'Smartphones', 1),
+(4, 'Laptops', 2),
+(5, 'Desktops', 2),
+(6, 'Android', 3),
+(7, 'iOS', 3),
+(8, 'Home & Kitchen', NULL),
+(9, 'Furniture', 8),
+(10, 'Appliances', 8);
+
+-- Insert products
+INSERT INTO Products (ProductName, Description, Price, CategoryID) VALUES
+('Apple iPhone 13 Pro Max', '6.7-inch Super Retina XDR display with ProMotion. A15 Bionic chip with Neural Engine. Ceramic Shield front cover. Pro camera system with new 12MP Telephoto, Wide, and Ultra Wide cameras. Night mode, Deep Fusion, ProRAW, 4K Dolby Vision HDR recording. LiDAR Scanner for improved AR experiences.', 1099.00, 7),
+('Samsung Galaxy S21 Ultra 5G', '6.8" WQHD+ Dynamic AMOLED 2X Infinity-O Display (3200x1440) | 515ppi. 12GB RAM | 256GB internal storage | Dual SIM (nano+nano) dual-standby (5G+5G). 5000mAH lithium-ion battery, 1 year manufacturer warranty for device and 6 months manufacturer warranty for in-box accessories including batteries from the date of purchase', 1199.99, 6),
+('HP Spectre x360', '11th Generation Intel Core i7-1165G7 Processor (up to 4.7 GHz with Intel Turbo Boost Technology, 12 MB L3 cache, 4 cores), 14" diagonal 4K UHD, IPS, micro-edge, WLED-backlit, multitouch-enabled, edge-to-edge glass with Corning Gorilla Glass NBT, 340 nits, 72% NTSC (3840 x 2160)', 1399.99, 4),
+('Dell XPS 13', '11th Generation Intel Core i7-1185G7 Processor (12MB Cache, up to 4.8 GHz), 13.4-inch FHD+ (1920 x 1200) InfinityEdge Non-Touch Anti-Glare 500-Nit Display, 16GB 4267MHz LPDDR4x Memory Onboard, 512GB PCIe NVMe x4 Solid State Drive Onboard', 1299.99, 4),
+('Logitech MX Master 3', 'Advanced 2.4 GHz wireless technology, USB-C charging, Darkfield 4000 DPI sensor, Gesture button, Rechargeable Li-Po (500 mAh) battery, 70 days battery life', 99.99, 5),
+('Razer DeathAdder V2', 'Focus+ 20K DPI Optical Sensor, Optical Mouse Switch, 5 On-board Memory Profiles, Speedflex Cable, 8 Programmable Buttons, Chroma RGB Lighting', 69.99, 5),
+('Ashley Furniture Signature Design - Sommerford 65" Dining Room Bench', 'HANDSOME CRAFTSMANSHIP: Made of reclaimed pine wood with a naturally distressed finish. Seat is finished in a dark, rustic hue that showcases the natural beauty of the wood.', 189.99, 9),
+('Keurig K-Cafe Special Edition Single Serve K-Cup Pod Coffee, Latte and Cappuccino Maker', 'COFFEE, LATTES & CAPPUCCINOS: Use any K-Cup pod to brew coffee, or make delicious lattes and cappuccinos. SIMPLE BUTTON CONTROLS: Just insert any K-Cup pod and use the button controls to brew delicious coffee, or make hot or iced lattes and cappuccinos.', 199.99, 10),
+('Instant Pot Duo 7-in-1 Electric Pressure Cooker', '7-in-1 Multi-Functional Cooker: Pressure Cooker, Slow Cooker, Rice Cooker, Saute/Browning, Yogurt Maker, Steamer & Warmer, Large, easy to use control panel with 14 built-in Smart Programs, Dual pressure, Automatic keep-warm and 3 temperatures for saute and slow cook, Delay cooking time up to 24-Hours, Manual setting up to 120 minutes of cook time', 99.99, 10),
+( 'Dyson Cyclone V10 Absolute Lightweight Cordless Stick Vacuum Cleaner', 'Up to 60 minutes run time when using a non-motorized tool. Direct drive cleaner head – our most powerful yet. Up to 20 minutes of fade-free power (in Suction mode II). Drives stiff nylon bristles into carpets to capture deep-down dirt. Whole-machine filtration captures 99.97% of microscopic dust particles as small as 0.3 microns. Quickly transforms to a handheld vacuum, to clean all around your home and car.', 549.99, 8),
+( 'Microsoft Surface Pro 7', '10th Gen Intel Core i5 processor, 12.3" PixelSense Touchscreen Display, 8GB RAM, 128GB SSD, Up to 10.5 hours battery life', 799.99, 4),
+( 'Apple MacBook Air', 'Apple M1 chip with 8-core CPU and 7-core GPU, 13.3" Retina display with True Tone, 8GB of unified memory, 256GB SSD, Up to 18 hours of battery life', 999.99, 4),
+( 'Amazon Echo Dot (4th Generation)', 'Meet the all-new Echo Dot—our most popular smart speaker with Alexa. The sleek, compact design delivers crisp vocals and balanced bass for full sound. Voice control your entertainment—stream songs from Amazon Music, Apple Music, Spotify, SiriusXM, and others. Ready to help—ask Alexa to tell a joke, play music, answer questions, play the news, check the weather, set alarms, and more.', 49.99, 1),
+( 'Sony WH-1000XM4 Wireless Industry Leading Noise Canceling Overhead Headphones', 'Industry-leading noise canceling with Dual Noise Sensor technology, Next-level music with Edge-AI, co-developed with Sony Music Studios Tokyo, Up to 30-hour battery life', 349.99, 1),
+( 'Nintendo Switch', 'Includes a Switch console, Switch dock, Joy-Con (L) and Joy-Con (R), Joy-Con grip, AC adapter, HDMI cable, and 2 Joy-Con strap accessories, Enjoy an amazing gaming experience with the Nintendo Switch console that travels with you', 299.99, 1),
+( 'Samsung 75" Class QLED Q80T Series', 'Direct Full Array 12X Quantum HDR 16X Object Tracking Sound (OTS) Ultra Viewing Angle Anti-Reflection Screen',2999.99, 5),
+( 'LG 65" Class 4K UHD 2160P OLED Smart TV with HDR', 'LG OLED TV: Only OLED pixels emit their own light, allowing for perfect black, intense color and stunning picture. Pixel Level Dimming: 8.3 million pixels control the light show. Millions of pixels emit their own light. Only OLED can turn pixels off completely and independently. α9 Gen 3 AI Processor 4K with AI Picture Pro/Sound Pro', 1999.99, 5),
+( 'Sony PlayStation 5 Console', 'Experience lightning-fast loading with an ultra-high-speed SSD, deeper immersion with support for haptic feedback, adaptive triggers and 3D Audio, and an all-new generation of incredible PlayStation games.', 499.99, 3),
+( 'Xbox Series X Console', 'Experience next-gen speed and performance with Xbox Velocity Architecture, powered by a custom SSD and integrated software. Get the Xbox Wireless Controller in Robot White with sculpted surfaces and refined geometry for enhanced comfort during gameplay. Xbox Game Pass Ultimate includes over 100 high-quality games on console, PC, and Android mobile devices (Beta, where available), all the benefits of Xbox Live Gold, and an EA Play membership, all for one low monthly price.', 499.99, 3),
+( 'Canon EOS Rebel T8i DSLR Camera', '24.1 Megapixel CMOS (APS-C) sensor with ISO 100-25600 (H: 51200). Built-in 45-point all cross-type AF system and EOS Intelligent Tracking and Recognition Auto Focus (iTR AF) for precise focus tracking. Dual Pixel CMOS AF with Eye Detection AF. High-Speed continuous shooting of up to 7.0 fps.', 899.99, 7);
+
+-- Insert data into Users table
+INSERT INTO Users (UserName, Email, Password, Address, Phone) VALUES
+('John Smith', 'john.smith@example.com', 'password123', '123 Main St, Anytown USA', '555-1234'),
+('Jane Doe', 'jane.doe@example.com', 'password456', '456 Oak Ave, Anytown USA', '555-5678'),
+('Bob Johnson', 'bob.johnson@example.com', 'password789', '789 Elm St, Anytown USA', '555-9012'),
+('Sarah Lee', 'sarah.lee@example.com', 'password101', '101 Maple St, Anytown USA', '555-3456'),
+('David Lee', 'david.lee@example.com', 'password112', '112 Birch Ave, Anytown USA', '555-7890'),
+('Emily Chen', 'emily.chen@example.com', 'password131', '131 Pine St, Anytown USA', '555-2345'),
+('Mike Garcia', 'mike.garcia@example.com', 'password415', '415 Oak St, Anytown USA', '555-6789'),
+('Karen Johnson', 'karen.johnson@example.com', 'password161', '161 Cedar Ave, Anytown USA', '555-0123'),
+('Lisa Kim', 'lisa.kim@example.com', 'password718', '718 Oak St, Anytown USA', '555-3456'),
+( 'Kevin Brown', 'kevin.brown@example.com', 'password923', '923 Maple Ave, Anytown USA', '555-6789');
+
+-- Insert data into Feedbacks table
+INSERT INTO Feedbacks (UserID, ProductID, Rating, Comment, Store) VALUES
+(1, 1, 4, 'Great laptop, fast and reliable', 'Best Buy'),
+(2, 1, 3, 'Good laptop, but not the best for gaming', 'Amazon'),
+(3, 2, 5, 'Amazing TV, the picture quality is stunning', 'Walmart'),
+(4, 2, 4, 'Great TV, but the price is a bit high', 'Best Buy'),
+(5, 3, 5, 'The best game console out there, period', 'GameStop'),
+(6, 3, 4, 'Great console, but not as many exclusives as PlayStation', 'Amazon'),
+(7, 4, 5, 'Amazing camera, the autofocus is incredibly fast', 'Best Buy'),
+(8, 4, 4, 'Great camera, but the body is a bit heavy', 'Walmart'),
+(9, 5, 5, 'Fantastic pressure cooker, cooks food quickly and evenly', 'Amazon'),
+( 10, 5, 4, 'Great pressure cooker, but a bit difficult to clean', 'Target');
+
+
+
+
